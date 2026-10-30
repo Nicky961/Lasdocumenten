@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PE Lasborgingsdocument</title>
+<style>
+:root{
+  --bg:#f4f5f3;
+  --surface:#ffffff;
+  --surface-2:#f0f1ee;
+  --border:#d9dbd5;
+  --border-strong:#b9bcb4;
+  --text:#1b1d19;
+  --text-dim:#5f635b;
+  --text-faint:#8b8f86;
+  --accent:#1f6f4a;
+  --accent-soft:#e3f0e8;
+  --accent-text:#ffffff;
+  --danger:#a4342a;
+  --danger-soft:#fbe8e5;
+  --warn:#8a6100;
+  --warn-soft:#fdf1d8;
+  --radius:12px;
+  --radius-sm:8px;
+  --shadow:0 1px 2px rgba(0,0,0,.05), 0 6px 20px rgba(0,0,0,.05);
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121411;
+    --surface:#1b1e1a;
+    --surface-2:#232722;
+    --border:#333730;
+    --border-strong:#4a4f46;
+    --text:#e8eae5;
+    --text-dim:#a6aba1;
+    --text-faint:#7b8077;
+    --accent:#4fae7d;
+    --accent-soft:#1d2e25;
+    --accent-text:#0d1410;
+    --danger:#e3796c;
+    --danger-soft:#33201d;
+    --warn:#d9ab4c;
+    --warn-soft:#2e2717;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121411;
+  --surface:#1b1e1a;
+  --surface-2:#232722;
+  --border:#333730;
+  --border-strong:#4a4f46;
+  --text:#e8eae5;
+  --text-dim:#a6aba1;
+  --text-faint:#7b8077;
+  --accent:#4fae7d;
+  --accent-soft:#1d2e25;
+  --accent-text:#0d1410;
+  --danger:#e3796c;
+  --danger-soft:#33201d;
+  --warn:#d9ab4c;
+  --warn-soft:#2e2717;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+
+/* ---------- header ---------- */
+header.top{
+  position:sticky;top:0;z-index:30;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+}
+.top-inner{max-width:760px;margin:0 auto;padding:14px 16px 0}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand h1{font-size:17px;margin:0;font-weight:650;letter-spacing:-.01em}
+.brand .sub{font-size:12px;color:var(--text-faint);font-family:var(--mono)}
+.tabs{display:flex;gap:2px;margin-top:12px}
+.tab{
+  appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  padding:9px 12px;font:inherit;font-size:14px;font-weight:550;color:var(--text-dim);
+  cursor:pointer;
+}
+.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
+.tab .count{
+  font-size:11px;font-family:var(--mono);background:var(--surface-2);
+  border-radius:99px;padding:1px 6px;margin-left:5px;color:var(--text-dim);
+}
+
+/* ---------- status strip ---------- */
+.status{
+  font-size:12.5px;padding:7px 12px;border-radius:var(--radius-sm);
+  margin:12px 0 0;display:none;cursor:pointer;
+}
+.status.show{display:block}
+.status.warn{background:var(--warn-soft);color:var(--warn)}
+.status.err{background:var(--danger-soft);color:var(--danger)}
+.status.ok{background:var(--accent-soft);color:var(--accent)}
+
+/* ---------- sections ---------- */
+section.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-top:16px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.card-head{
+  padding:13px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;background:var(--surface-2);
+}
+.card-head .n{
+  font-family:var(--mono);font-size:11px;color:var(--text-faint);
+  border:1px solid var(--border-strong);border-radius:4px;padding:1px 5px;
+}
+.card-head h2{margin:0;font-size:14px;font-weight:650;letter-spacing:.01em}
+.card-body{padding:6px 16px 16px}
+
+/* ---------- fields ---------- */
+.field{padding:12px 0;border-bottom:1px solid var(--border)}
+.field:last-child{border-bottom:0}
+.field > label.q, .field > .q{
+  display:block;font-size:14.5px;font-weight:600;margin-bottom:3px;
+}
+.q .req{color:var(--danger);margin-left:2px}
+.hint{font-size:12.5px;color:var(--text-dim);margin:0 0 9px;line-height:1.45}
+.hint code{font-family:var(--mono);font-size:11.5px}
+
+input[type="text"],input[type="date"],input[type="email"],textarea,select{
+  width:100%;font:inherit;font-size:16px;
+  background:var(--bg);
+  color:var(--text);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-sm);
+  padding:10px 11px;
+}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text-dim) 50%),linear-gradient(135deg,var(--text-dim) 50%,transparent 50%);background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:34px}
+textarea{min-height:96px;resize:vertical;line-height:1.5}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.invalid input,.invalid textarea,.invalid select{border-color:var(--danger);background:var(--danger-soft)}
+.err-msg{display:none;font-size:12.5px;color:var(--danger);margin-top:6px}
+.invalid .err-msg{display:block}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+/* ---------- ja / nee ---------- */
+.jn{display:flex;gap:8px;margin-top:2px}
+.jn button{
+  flex:1;font:inherit;font-size:15px;font-weight:600;
+  padding:12px 8px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--border-strong);
+  background:var(--bg);color:var(--text-dim);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  min-height:48px;
+}
+.jn button .dot{width:9px;height:9px;border-radius:50%;background:var(--border-strong)}
+.jn button[data-on="1"][data-val="ja"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.jn button[data-on="1"][data-val="ja"] .dot{background:var(--accent)}
+.jn button[data-on="1"][data-val="nee"]{background:var(--danger-soft);border-color:var(--danger);color:var(--danger)}
+.jn button[data-on="1"][data-val="nee"] .dot{background:var(--danger)}
+
+/* ---------- foto's ---------- */
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+@media(max-width:560px){.photos{grid-template-columns:1fr}}
+.photo{
+  border:1.5px dashed var(--border-strong);border-radius:var(--radius-sm);
+  background:var(--bg);padding:10px;text-align:left;position:relative;
+  min-height:128px;display:flex;flex-direction:column;
+}
+.photo.filled{border-style:solid;border-color:var(--accent);background:var(--accent-soft)}
+.photo .plabel{font-size:11.5px;font-weight:700;font-family:var(--mono);color:var(--text-faint);margin-bottom:4px}
+.photo.filled .plabel{color:var(--accent)}
+.photo .pdesc{font-size:11.5px;color:var(--text-dim);line-height:1.4;flex:1}
+.photo img{width:100%;height:96px;object-fit:cover;border-radius:5px;margin-bottom:7px;background:var(--surface-2)}
+.photo .pbtns{display:flex;gap:6px;margin-top:8px}
+.photo .pbtns button{
+  flex:1;font:inherit;font-size:12.5px;font-weight:600;padding:8px 6px;
+  border-radius:6px;border:1px solid var(--border-strong);
+  background:var(--surface);color:var(--text);cursor:pointer;min-height:36px;
+}
+.photo .pbtns button.rm{color:var(--danger);border-color:var(--danger)}
+.photo .busy{font-size:11.5px;color:var(--text-dim);font-family:var(--mono)}
+input[type="file"]{display:none}
+
+/* ---------- handtekening ---------- */
+.sigwrap{border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--bg);overflow:hidden}
+canvas#sig{display:block;width:100%;height:150px;touch-action:none;cursor:crosshair}
+.sigwrap img{display:block;width:100%;max-height:150px;object-fit:contain;background:var(--bg)}
+.sigbar{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-faint)}
+.sigbar button{font:inherit;font-size:12.5px;background:none;border:0;color:var(--accent);font-weight:600;cursor:pointer;padding:4px 2px}
+
+/* ---------- action bar ---------- */
+.actionbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:11px 16px calc(11px + env(safe-area-inset-bottom));
+}
+.actionbar-inner{max-width:760px;margin:0 auto;display:flex;gap:9px;align-items:center}
+.btn{
+  font:inherit;font-size:15px;font-weight:650;border-radius:var(--radius-sm);
+  padding:13px 18px;cursor:pointer;border:1px solid var(--border-strong);
+  background:var(--surface);color:var(--text);min-height:48px;white-space:nowrap;
+}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-text);flex:1}
+.btn.ghost{background:transparent}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.savehint{font-size:12px;color:var(--text-faint);font-family:var(--mono);margin-left:auto}
+
+/* ---------- archief ---------- */
+.rec{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:13px 15px;margin-top:10px;cursor:pointer;
+}
+.rec:hover{border-color:var(--border-strong)}
+.rec-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.rec-top strong{font-size:15px}
+.rec-meta{font-size:12.5px;color:var(--text-dim);margin-top:3px}
+.pill{font-size:11px;font-weight:700;font-family:var(--mono);padding:2px 7px;border-radius:99px;white-space:nowrap}
+.pill.ok{background:var(--accent-soft);color:var(--accent)}
+.pill.att{background:var(--warn-soft);color:var(--warn)}
+.pill.draft{background:var(--surface-2);color:var(--text-faint)}
+.empty{text-align:center;padding:52px 20px;color:var(--text-faint);font-size:14px}
+.toolbar{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.toolbar .btn{font-size:13.5px;padding:9px 13px;min-height:40px}
+
+/* ---------- mail modal ---------- */
+.modal-back{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.modal-back[hidden]{display:none}
+@media(min-width:560px){.modal-back{align-items:center}}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;max-width:440px;width:100%}
+.modal h3{margin:0 0 4px;font-size:16px}
+.modal .mfile{font-family:var(--mono);font-size:12px;color:var(--accent);margin:0 0 10px;word-break:break-all}
+.modal .mtxt{font-size:13.5px;color:var(--text-dim);line-height:1.5;margin:0 0 14px}
+.modal .mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px;color:var(--text-dim);margin-top:11px;flex-wrap:wrap}
+.modal .mrow code{font-family:var(--mono);font-size:12px}
+.modal .lnk{background:none;border:0;font:inherit;font-size:12.5px;font-weight:600;color:var(--accent);cursor:pointer;padding:2px}
+
+/* ---------- print ---------- */
+#printArea{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  header.top,.actionbar,#app,.status{display:none !important}
+  #printArea{display:block;padding:0}
+  .p-h1{font-size:15pt;margin:0 0 2mm}
+  .p-sub{font-size:9pt;color:#444;margin:0 0 5mm;border-bottom:1px solid #000;padding-bottom:3mm}
+  .p-sec{font-size:10.5pt;font-weight:700;margin:5mm 0 2mm;text-decoration:underline}
+  table.p-t{width:100%;border-collapse:collapse;font-size:9.5pt}
+  table.p-t td{border:1px solid #999;padding:1.7mm 2.2mm;vertical-align:top}
+  table.p-t td.k{width:42%;background:#f2f2f2;font-weight:600}
+  .p-photos{display:flex;gap:3mm;margin-top:3mm;page-break-inside:avoid}
+  .p-photos figure{flex:1;margin:0}
+  .p-photos img{width:100%;border:1px solid #999}
+  .p-photos figcaption{font-size:7.5pt;margin-top:1mm}
+  .p-sig{margin-top:6mm;page-break-inside:avoid}
+  .p-sig img{height:20mm;border-bottom:1px solid #000}
+  .p-foot{margin-top:6mm;font-size:8pt;font-style:italic;color:#333;border-top:1px solid #999;padding-top:2mm}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>PE Lasborgingsdocument</h1>
+      <span class="sub">Bijlage 4 &middot; Liander</span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tabForm" aria-selected="true">Nieuw formulier</button>
+      <button class="tab" role="tab" id="tabList" aria-selected="false">Archief <span class="count" id="cnt">0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="status" id="status"></div>
+  <div id="app"></div>
+</div>
+
+<div class="actionbar" id="actionbar">
+  <div class="actionbar-inner" id="actionbarInner"></div>
+</div>
+
+<input type="file" id="filepick" accept="image/*" capture="environment">
+
+<div id="mailModal" class="modal-back" hidden>
+  <div class="modal">
+    <h3>PDF klaar</h3>
+    <p class="mfile" id="mFile"></p>
+    <p class="mtxt">De PDF is opgeslagen op dit apparaat. Open hieronder de mail — onderwerp en tekst staan al klaar. <strong>Voeg de zojuist opgeslagen PDF nog toe als bijlage</strong> (een webpagina mag zelf geen bestand aan een mail hangen).</p>
+    <a class="btn primary" id="mOpen" href="#" style="display:block;text-align:center;text-decoration:none">Mail openen</a>
+    <div class="mrow"><span>Aan: <code>beproevingen@mookbv.nl</code></span><button class="lnk" id="mCopy">Kopieer adres</button></div>
+    <button class="btn ghost" id="mClose" style="width:100%;margin-top:8px">Sluiten</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   Formulierdefinitie — 1:1 met Bijlage 4
+   ============================================================ */
+const LASSERS = ["Martin de Haan","Ronnie Terweij"];
+const BUISLEV = ["Wavin","George Fisher (GF)"];
+const REGIOS  = ["Noord-Holland","Zuid-Holland"];
+
+const PHOTOS = [
+  {key:"A", label:"Foto A", desc:"De werkplek inclusief de mogelijke voorzorgsmaatregelen."},
+  {key:"B", label:"Foto B", desc:"Tijdens het lasproces: de laszone inclusief inklem- en positioneringsgereedschap."},
+  {key:"C", label:"Foto C", desc:"De PE las inclusief de geschreven lasgegevens."}
+];
+
+const CHECKS = [
+  {id:"q12", n:12, sec:"Voorbereiding", q:"Is werkplek, materiaal en materieel correct voorbereid?",
+   hint:"werkruimte / lasgereedschap / buis klasse / lashulpstuk", req:true},
+  {id:"q13", n:13, sec:"Voorbereiding", q:"Zijn negatieve omgevingsfactoren uitgesloten?",
+   hint:"wind / temperatuur / vocht uitgesloten / zon / tocht door buis uitgesloten", req:true},
+  {id:"q14", n:14, sec:"Voorbewerking", q:"NTA8828 Elektrolas",
+   hint:"buisuiteinden haaks / rondingsklemmen / geschild / insteekdiepte afgetekend / inklem- en positioneringsklemmen / reinigen / lasindicatoren vrij van vervuiling", req:true},
+  {id:"q15", n:15, sec:"Lasproces", q:"De PE las is uitgevoerd volgens het van toepassing zijnde lasproces?",
+   hint:"NTA8828", req:true},
+  {id:"q17", n:17, sec:"Uitvoeringsfoto's", q:"Zijn de foto's gemaakt?", hint:"", req:true},
+  {id:"q18", n:18, sec:"Lasinspectie", q:"PE las geïnspecteerd, door het uitvoeren van een visuele inspectie?", hint:"", req:true}
+];
+
+const TEXTFIELDS = [
+  {id:"datum",      n:1,  label:"Datum",              type:"date",   req:true},
+  {id:"projectnr",  n:2,  label:"Projectnummer",      type:"text",   req:true, ph:"bijv. 30012345"},
+  {id:"lasser",     n:3,  label:"Naam PE lasser",     type:"select", req:true, opts:LASSERS, other:true},
+  {id:"buislev",    n:4,  label:"Buisleverancier",    type:"select", req:true, opts:BUISLEV},
+  {id:"regio",      n:5,  label:"Regio",              type:"select", req:true, opts:REGIOS},
+  {id:"adres",      n:6,  label:"Adres",              type:"text",   req:true, ph:"straat + huisnummer"},
+  {id:"plaats",     n:7,  label:"Plaats",             type:"text",   req:true},
+  {id:"lth",        n:8,  label:"Naam LTH",           type:"text",   req:true},
+  {id:"lthmail",    n:9,  label:"Mailadres LTH",      type:"email",  req:false},
+  {id:"hulpstuk",   n:10, label:"Hulpstuk Leverancier",type:"text",  req:true},
+  {id:"lasnummer",  n:11, label:"Lasnummer",          type:"text",   req:false}
+];
+
+const FOOTER_TXT = "De betreffende PE lasser is verantwoordelijk voor het correct vullen van dit borgingsdocument. " +
+  "De LTH dient dit borgingsdocument te paraferen als hij de las visueel geïnspecteerd heeft en akkoord is met " +
+  "het eindresultaat, indien van toepassing onderbouwd met een verklaring.";
+
+/* ============================================================
+   State
+   ============================================================ */
+const DRAFT_KEY = "pe-las-draft-v1";
+let view = "form";             // "form" | "list" | "detail"
+let model = blankModel();
+let editingId = null;          // db doc id wanneer we een bestaande bewerken
+let detail = null;             // record dat in detailweergave staat
+let records = [];
+let db = null, assets = null, downloads = null;
+let myUid = null, isAdmin = false, editingPath = null;
+const formUnsubs = {}, perUser = {};
+let capsReady = false;
+let pendingPhotoKey = null;
+let sigDirty = false;
+
+function blankModel(){
+  const m = {fotos:{}, paraaf:null, status:"concept"};
+  TEXTFIELDS.forEach(f => m[f.id] = "");
+  CHECKS.forEach(c => m[c.id] = "");
+  m.verklaring = "";
+  m.datum = new Date().toISOString().slice(0,10);
+  return m;
+}
+
+/* ============================================================
+   Helpers
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const blobUrl = id => (id && String(id).slice(0,5) === "data:") ? id : "/_blob/" + id;
+
+function setStatus(msg, kind){
+  const el = $("#status");
+  if(!msg){ el.className = "status"; el.textContent = ""; return; }
+  el.className = "status show " + (kind || "warn");
+  el.textContent = msg;
+}
+function flash(msg, kind, ms){
+  setStatus(msg, kind || "ok");
+  clearTimeout(flash._t);
+  flash._t = setTimeout(() => setStatus(""), ms || 3200);
+}
+function nlDate(iso){
+  if(!iso) return "—";
+  const p = String(iso).split("-");
+  return p.length === 3 ? `${p[2]}-${p[1]}-${p[0]}` : iso;
+}
+function anyNee(m){ return CHECKS.some(c => m[c.id] === "nee"); }
+function recStatus(m){
+  if(m.status !== "afgerond") return {cls:"draft", txt:"CONCEPT"};
+  return anyNee(m) ? {cls:"att", txt:"VERKLARING"} : {cls:"ok", txt:"AKKOORD"};
+}
+
+/* localStorage draft — per-viewer gemak, mag falen */
+function saveDraft(){
+  if(editingId) return;
+  try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(model)); }catch(e){}
+}
+function loadDraft(){
+  try{
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && typeof d === "object") model = Object.assign(blankModel(), d); }
+  }catch(e){}
+}
+function clearDraft(){ try{ localStorage.removeItem(DRAFT_KEY); }catch(e){} }
+
+/* ============================================================
+   Capabilities
+   ============================================================ */
+/* ============================================================
+   Standalone-modus — werkt zonder claude.ai
+   Als de app buiten Claude wordt gehost (window.claude bestaat niet),
+   vallen db/assets/downloads terug op de browser zelf: localStorage
+   voor het archief, data-URL's voor foto's/paraaf, en een gewone
+   downloadlink voor PDF/CSV. Alles blijft dan lokaal in de browser
+   van degene die het formulier invult — er is geen gedeeld archief
+   tussen verschillende mensen/apparaten zonder eigen server.
+   ============================================================ */
+const STANDALONE = typeof claude === "undefined";
+
+const LS_KEY = "pe_lasborging_records_v1";
+function lsLoad(){ try{ return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }catch(e){ return []; } }
+const lsListeners = [];
+function lsSnap(){ return { docs: lsLoad().map(r => ({ id:r.id, exists:true, data:() => r })) }; }
+function lsSave(arr){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(arr)); }catch(e){}
+  setTimeout(() => lsListeners.forEach(fn => { try{ fn(lsSnap()); }catch(e){} }), 0);
+}
+
+const localDb = {
+  collection(){
+    const self = {
+      orderBy(){ return self; },
+      limit(){ return self; },
+      onSnapshot(next){
+        lsListeners.push(next);
+        next(lsSnap());
+        return () => { const i = lsListeners.indexOf(next); if(i >= 0) lsListeners.splice(i,1); };
+      },
+      add(data){
+        const arr = lsLoad();
+        const id = "r" + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+        arr.unshift(Object.assign({id}, data));
+        lsSave(arr);
+        return Promise.resolve({id});
+      }
+    };
+    return self;
+  },
+  doc(path){
+    const id = String(path).split("/").pop();
+    return {
+      id,
+      set(){ return Promise.resolve(); },
+      collection(){ return localDb.collection(); },
+      update(data){
+        const arr = lsLoad();
+        const i = arr.findIndex(r => r.id === id);
+        if(i >= 0) arr[i] = Object.assign({}, arr[i], data);
+        lsSave(arr);
+        return Promise.resolve();
+      },
+      delete(){
+        lsSave(lsLoad().filter(r => r.id !== id));
+        return Promise.resolve();
+      }
+    };
+  }
+};
+
+const localAssets = {
+  upload(blob){
+    return new Promise((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve({id: fr.result, url: fr.result, sizeBytes: blob.size, contentType: blob.type});
+      fr.onerror = () => reject(new Error("lezen mislukt"));
+      fr.readAsDataURL(blob);
+    });
+  }
+};
+
+function localSave({filename, data}){
+  return new Promise((resolve, reject) => {
+    try{
+      const lower = String(filename).toLowerCase();
+      let blob;
+      if(data instanceof ArrayBuffer) blob = new Blob([data], {type: lower.endsWith(".pdf") ? "application/pdf" : "application/octet-stream"});
+      else if(typeof data === "string") blob = new Blob([data], {type: lower.endsWith(".csv") ? "text/csv;charset=utf-8" : "text/plain;charset=utf-8"});
+      else blob = data instanceof Blob ? data : new Blob([data]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = filename; a.style.display = "none";
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1500);
+      resolve({status:"saved"});
+    }catch(e){ reject({code:"bad_request", message: e.message}); }
+  });
+}
+const localDownloads = { save: localSave };
+
+(async function initCaps(){
+  if(STANDALONE){
+    db = localDb; assets = localAssets; downloads = localDownloads;
+    myUid = "local"; isAdmin = false;
+    capsReady = true;
+    subscribeRecords();
+    render();
+    flash("Archief en foto's worden lokaal in deze browser bewaard (niet gedeeld tussen apparaten).", "warn", 6000);
+    return;
+  }
+  try{ db = await claude.use("db"); }catch(e){ db = null; }
+  try{ assets = await claude.use("assets"); }catch(e){ assets = null; }
+  try{ downloads = await claude.use("downloads"); }catch(e){ downloads = null; }
+  try{
+    const user = await claude.use("user");
+    if(user){ myUid = await user.id(); isAdmin = !!(await user.canEdit()); }
+  }catch(e){ myUid = null; }
+  if(!myUid) db = null; // zonder ingelogde gebruiker geen eigen archiefmap
+  capsReady = true;
+  if(db){ subscribeRecords(); } else {
+    setStatus("Het archief is in deze weergave niet beschikbaar — je kunt het formulier wel invullen, als PDF opslaan en mailen.", "warn");
+  }
+  render();
+})();
+
+/* Archief: elk formulier staat onder lassen/<gebruiker>/forms/<id>.
+   Een lasser leest en schrijft alleen zijn eigen map; jij (eigenaar)
+   en bewerkers zien alle mappen. */
+function formsCol(uid){ return db.doc("lassen/" + uid).collection("forms"); }
+
+function applyRecords(){
+  records = [].concat(...Object.values(perUser)).sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+  $("#cnt").textContent = records.length;
+  if(view === "list") render();
+  if(view === "detail" && detail){
+    const fresh = records.find(r => r.__path === detail.__path);
+    if(fresh){ detail = fresh; render(); }
+  }
+}
+
+function watchForms(uid){
+  if(!uid || formUnsubs[uid]) return;
+  try{
+    formUnsubs[uid] = formsCol(uid).orderBy("createdAt","desc").limit(200).onSnapshot(snap => {
+      perUser[uid] = snap.docs.map(d => Object.assign({}, d.data() || {}, {__id:d.id, __path:"lassen/"+uid+"/forms/"+d.id}));
+      applyRecords();
+    }, () => { /* leesfout: stil */ });
+  }catch(e){}
+}
+
+function subscribeRecords(){
+  if(isAdmin && !STANDALONE){
+    try{
+      db.collection("lassen").onSnapshot(snap => { snap.docs.forEach(d => watchForms(d.id)); }, () => {});
+    }catch(e){}
+  }
+  watchForms(myUid);
+}
+
+/* ============================================================
+   Render
+   ============================================================ */
+function render(){
+  $("#tabForm").setAttribute("aria-selected", view === "form" ? "true" : "false");
+  $("#tabList").setAttribute("aria-selected", (view === "list" || view === "detail") ? "true" : "false");
+  if(view === "form") renderForm();
+  else if(view === "list") renderList();
+  else renderDetail();
+}
+
+function sectionCard(num, title, inner){
+  return `<section class="card"><div class="card-head">${num ? `<span class="n">${num}</span>` : ""}<h2>${esc(title)}</h2></div><div class="card-body">${inner}</div></section>`;
+}
+
+function textFieldHtml(f){
+  const v = model[f.id] || "";
+  const req = f.req ? '<span class="req">*</span>' : "";
+  let input;
+  if(f.type === "select"){
+    const isOther = v && f.opts.indexOf(v) === -1;
+    const opts = ['<option value="">— kies —</option>']
+      .concat(f.opts.map(o => `<option value="${esc(o)}"${v===o?" selected":""}>${esc(o)}</option>`))
+      .concat(f.other ? [`<option value="__other"${isOther?" selected":""}>Anders…</option>`] : [])
+      .join("");
+    input = `<select data-f="${f.id}" data-sel="1">${opts}</select>` +
+      (f.other ? `<input type="text" data-f="${f.id}" data-other="1" placeholder="Naam invullen" value="${isOther?esc(v):""}" style="margin-top:8px;display:${isOther?"block":"none"}">` : "");
+  } else {
+    input = `<input type="${f.type}" data-f="${f.id}" value="${esc(v)}" placeholder="${esc(f.ph||"")}"${f.type==="email"?' inputmode="email" autocapitalize="off"':""}>`;
+  }
+  return `<div class="field" id="fld-${f.id}">
+    <label class="q"><span class="n" style="font-family:var(--mono);font-size:11px;color:var(--text-faint)">${f.n}.</span> ${esc(f.label)}${req}</label>
+    ${input}
+    <div class="err-msg">Dit veld is verplicht.</div>
+  </div>`;
+}
+
+function checkHtml(c){
+  const v = model[c.id];
+  return `<div class="field" id="fld-${c.id}">
+    <div class="q"><span style="font-family:var(--mono);font-size:11px;color:var(--text-faint)">${c.n}.</span> ${esc(c.q)}${c.req?'<span class="req">*</span>':""}</div>
+    ${c.hint ? `<p class="hint">${esc(c.hint)}</p>` : ""}
+    <div class="jn">
+      <button type="button" data-jn="${c.id}" data-val="ja"  data-on="${v==="ja"?1:0}"><span class="dot"></span>Ja</button>
+      <button type="button" data-jn="${c.id}" data-val="nee" data-on="${v==="nee"?1:0}"><span class="dot"></span>Nee</button>
+    </div>
+    <div class="err-msg">Maak een keuze.</div>
+  </div>`;
+}
+
+function photosHtml(){
+  const cells = PHOTOS.map(p => {
+    const id = model.fotos[p.key];
+    const busy = model.fotos["_busy_"+p.key];
+    return `<div class="photo${id?" filled":""}" data-photo="${p.key}">
+      <div class="plabel">${esc(p.label)}</div>
+      ${id ? `<img src="${blobUrl(id)}" alt="${esc(p.label)}">` : `<div class="pdesc">${esc(p.desc)}</div>`}
+      ${busy ? `<div class="busy">uploaden…</div>` : `<div class="pbtns">
+        <button type="button" data-pick="${p.key}">${id?"Vervang":"Toevoegen"}</button>
+        ${id?`<button type="button" class="rm" data-rmphoto="${p.key}">Wis</button>`:""}
+      </div>`}
+    </div>`;
+  }).join("");
+  const note = assets ? "" : `<p class="hint" style="margin-top:10px;color:var(--warn)">Foto-uploads zijn in deze weergave niet beschikbaar.</p>`;
+  return `<div class="field" id="fld-fotos">
+    <div class="q"><span style="font-family:var(--mono);font-size:11px;color:var(--text-faint)">16.</span> Uitvoeringsfoto's</div>
+    <p class="hint">Drie foto's conform het borgingsdocument.</p>
+    <div class="photos">${cells}</div>${note}
+  </div>`;
+}
+
+function sigHtml(){
+  const done = !!model.paraaf;
+  return `<div class="field">
+    <div class="q">Paraaf LTH</div>
+    <p class="hint">De LTH parafeert nadat hij de las visueel geïnspecteerd heeft en akkoord is met het eindresultaat.</p>
+    <div class="sigwrap">
+      ${done ? `<img src="${blobUrl(model.paraaf)}" alt="Paraaf LTH">` : `<canvas id="sig"></canvas>`}
+      <div class="sigbar">
+        <span>${done ? "Geparafeerd" : "Teken hierboven met vinger of muis"}</span>
+        <button type="button" id="sigClear">${done ? "Opnieuw" : "Wissen"}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderForm(){
+  const nee = anyNee(model);
+  const html = [
+    sectionCard("1–11","Algemene gegevens", TEXTFIELDS.map(textFieldHtml).join("")),
+    sectionCard("12–13","Voorbereiding", CHECKS.filter(c=>c.sec==="Voorbereiding").map(checkHtml).join("")),
+    sectionCard("14","Voorbewerking", CHECKS.filter(c=>c.sec==="Voorbewerking").map(checkHtml).join("")),
+    sectionCard("15","Lasproces", CHECKS.filter(c=>c.sec==="Lasproces").map(checkHtml).join("")),
+    sectionCard("16–17","Uitvoeringsfoto's", photosHtml() + CHECKS.filter(c=>c.sec==="Uitvoeringsfoto's").map(checkHtml).join("")),
+    sectionCard("18","Lasinspectie", CHECKS.filter(c=>c.sec==="Lasinspectie").map(checkHtml).join("")),
+    sectionCard("19","Verklaring",
+      `<div class="field" id="fld-verklaring">
+        <div class="q">Verklaring${nee?'<span class="req">*</span>':""}</div>
+        <p class="hint">${nee
+          ? "Er is minimaal één vraag met <strong>Nee</strong> beantwoord — een verklaring is verplicht."
+          : "Indien op één van bovenstaande vragen het antwoord NEE is, dan een verklaring geven."}</p>
+        <textarea data-f="verklaring" placeholder="Toelichting…">${esc(model.verklaring)}</textarea>
+        <div class="err-msg">Een verklaring is verplicht omdat er 'Nee' is geantwoord.</div>
+      </div>` + sigHtml()),
+    `<p class="hint" style="margin:16px 2px 0;font-style:italic">${esc(FOOTER_TXT)}</p>`
+  ].join("");
+  $("#app").innerHTML = html;
+  if(!model.paraaf) setupSignature();
+
+  const archiefBtn = db
+    ? `<button class="btn ghost" id="btnSave">${editingId ? "Wijzigingen opslaan" : "Ook in archief bewaren"}</button>`
+    : "";
+  $("#actionbarInner").innerHTML =
+    `<button class="btn primary" id="btnMailDirect">PDF maken &amp; mailen</button>
+     <button class="btn ghost" id="btnPdfOnly">Alleen PDF opslaan</button>
+     ${archiefBtn}
+     <button class="btn ghost" id="btnReset">${editingId ? "Annuleer" : "Leeg"}</button>`;
+  $("#actionbar").style.display = "block";
+}
+
+function renderList(){
+  const list = records.length ? records.map(r => {
+    const st = recStatus(r);
+    return `<div class="rec" data-open="${esc(r.__path)}">
+      <div class="rec-top">
+        <strong>${esc(r.projectnr || "Zonder projectnummer")}</strong>
+        <span class="pill ${st.cls}">${st.txt}</span>
+      </div>
+      <div class="rec-meta">${esc(nlDate(r.datum))} &middot; ${esc(r.plaats || "—")}${r.adres?", "+esc(r.adres):""}</div>
+      <div class="rec-meta">Lasser: ${esc(r.lasser||"—")}${r.lasnummer?" &middot; Lasnr. "+esc(r.lasnummer):""}</div>
+    </div>`;
+  }).join("") : `<div class="empty">${db ? "Nog geen formulieren opgeslagen." : "Opslag niet beschikbaar in deze weergave."}</div>`;
+
+  $("#app").innerHTML = `<div class="toolbar">
+      <button class="btn" id="btnCsv">Exporteer CSV</button>
+      <button class="btn" id="btnNew">Nieuw formulier</button>
+    </div>${list}`;
+  $("#actionbar").style.display = "none";
+}
+
+function renderDetail(){
+  const r = detail; if(!r){ view = "list"; return render(); }
+  const st = recStatus(r);
+  const row = (k,v) => `<div class="field" style="padding:9px 0"><div style="font-size:12.5px;color:var(--text-dim)">${esc(k)}</div><div style="font-weight:600">${v || "—"}</div></div>`;
+  const jn = v => v === "ja" ? '<span style="color:var(--accent)">Ja</span>' : v === "nee" ? '<span style="color:var(--danger)">Nee</span>' : "—";
+
+  const algemeen = TEXTFIELDS.map(f => row(f.label, esc(f.type==="date"? nlDate(r[f.id]) : (r[f.id]||"")))).join("");
+  const checks = CHECKS.map(c => row(c.n + ". " + c.q, jn(r[c.id]))).join("");
+  const fotos = PHOTOS.filter(p => r.fotos && r.fotos[p.key]).map(p =>
+    `<figure style="margin:0"><img src="${blobUrl(r.fotos[p.key])}" style="width:100%;border-radius:8px;border:1px solid var(--border)"><figcaption style="font-size:11.5px;color:var(--text-dim);margin-top:5px">${esc(p.label)} — ${esc(p.desc)}</figcaption></figure>`
+  ).join("") || `<p class="hint">Geen foto's opgeslagen.</p>`;
+
+  $("#app").innerHTML =
+    `<div class="toolbar"><button class="btn" id="btnBack">← Archief</button>
+      <button class="btn primary" id="btnMailRec" style="margin-left:auto">PDF maken &amp; mailen</button>
+      <button class="btn ghost" id="btnEdit">Bewerken</button>
+      <button class="btn ghost" id="btnPdfRecOnly">PDF opslaan</button>
+      <button class="btn ghost" id="btnDel" style="color:var(--danger);border-color:var(--danger)">Verwijderen</button></div>
+     <section class="card"><div class="card-head"><h2>${esc(r.projectnr||"—")}</h2><span class="pill ${st.cls}" style="margin-left:auto">${st.txt}</span></div>
+     <div class="card-body">${algemeen}</div></section>
+     ${sectionCard(null,"Controlepunten", checks)}
+     ${sectionCard(null,"Uitvoeringsfoto's", `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:8px 0">${fotos}</div>`)}
+     ${sectionCard(null,"Verklaring", `<div class="field" style="padding:9px 0;white-space:pre-wrap">${esc(r.verklaring)||'<span style="color:var(--text-faint)">Geen verklaring.</span>'}</div>
+       ${r.paraaf ? `<div class="field" style="padding:12px 0"><div style="font-size:12.5px;color:var(--text-dim);margin-bottom:6px">Paraaf LTH — ${esc(r.lth||"")}</div><img src="${blobUrl(r.paraaf)}" style="max-height:110px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px"></div>` : ""}`)}`;
+  $("#actionbar").style.display = "none";
+}
+
+/* ============================================================
+   Handtekening
+   ============================================================ */
+function setupSignature(){
+  const cv = $("#sig"); if(!cv) return;
+  const ratio = window.devicePixelRatio || 1;
+  const fit = () => {
+    const r = cv.getBoundingClientRect();
+    if(!r.width) return;
+    cv.width = Math.round(r.width * ratio);
+    cv.height = Math.round(r.height * ratio);
+    const ctx = cv.getContext("2d");
+    ctx.scale(ratio, ratio);
+    ctx.lineWidth = 2.2; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.strokeStyle = getComputedStyle(document.body).color;
+  };
+  fit();
+  const ctx = cv.getContext("2d");
+  let drawing = false;
+  const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener("pointerdown", e => {
+    drawing = true; sigDirty = true; cv.setPointerCapture(e.pointerId);
+    const [x,y] = pos(e); ctx.beginPath(); ctx.moveTo(x,y);
+  });
+  cv.addEventListener("pointermove", e => { if(!drawing) return; const [x,y] = pos(e); ctx.lineTo(x,y); ctx.stroke(); });
+  cv.addEventListener("pointerup", () => { drawing = false; });
+  cv.addEventListener("pointercancel", () => { drawing = false; });
+}
+
+function sigIsEmpty(){ return !sigDirty; }
+
+async function uploadSignature(){
+  const cv = $("#sig");
+  if(!cv || sigIsEmpty() || !assets) return null;
+  // witte achtergrond zodat de paraaf ook op print zichtbaar is
+  const out = document.createElement("canvas");
+  out.width = cv.width; out.height = cv.height;
+  const c = out.getContext("2d");
+  c.fillStyle = "#ffffff"; c.fillRect(0,0,out.width,out.height);
+  c.drawImage(cv, 0, 0);
+  const blob = await new Promise(res => out.toBlob(res, "image/png"));
+  if(!blob) return null;
+  try{ const r = await assets.upload(blob, {filename:"paraaf-lth.png"}); return r.id; }
+  catch(e){ return null; }
+}
+
+/* ============================================================
+   Foto's
+   ============================================================ */
+async function shrink(file){
+  const url = URL.createObjectURL(file);
+  try{
+    const img = await new Promise((res, rej) => {
+      const i = new Image();
+      i.onload = () => res(i); i.onerror = () => rej(new Error("laden mislukt"));
+      i.src = url;
+    });
+    const max = 1600;
+    let {width:w, height:h} = img;
+    if(w > max || h > max){ const s = max / Math.max(w,h); w = Math.round(w*s); h = Math.round(h*s); }
+    const cv = document.createElement("canvas");
+    cv.width = w; cv.height = h;
+    cv.getContext("2d").drawImage(img, 0, 0, w, h);
+    const blob = await new Promise(res => cv.toBlob(res, "image/jpeg", 0.85));
+    return blob || file;
+  }catch(e){ return file; }
+  finally{ URL.revokeObjectURL(url); }
+}
+
+$("#filepick").addEventListener("change", async e => {
+  const file = e.target.files && e.target.files[0];
+  const key = pendingPhotoKey;
+  e.target.value = "";
+  if(!file || !key) return;
+  if(!assets){ flash("Foto-upload is hier niet beschikbaar.", "err"); return; }
+  model.fotos["_busy_"+key] = true; renderForm();
+  try{
+    const blob = await shrink(file);
+    const res = await assets.upload(blob, {filename:`foto-${key.toLowerCase()}.jpg`});
+    model.fotos[key] = res.id;
+    if(PHOTOS.every(p => model.fotos[p.key]) && !model.q17) model.q17 = "ja";
+    saveDraft();
+  }catch(err){
+    flash("Foto uploaden mislukt" + (err && err.code ? ` (${err.code})` : "") + ".", "err", 5000);
+  }finally{
+    delete model.fotos["_busy_"+key];
+    renderForm();
+  }
+});
+
+/* ============================================================
+   Validatie + opslaan
+   ============================================================ */
+function validate(){
+  let firstBad = null;
+  document.querySelectorAll(".field.invalid").forEach(el => el.classList.remove("invalid"));
+  const bad = id => {
+    const el = $("#fld-"+id);
+    if(el){ el.classList.add("invalid"); if(!firstBad) firstBad = el; }
+  };
+  TEXTFIELDS.forEach(f => { if(f.req && !String(model[f.id]||"").trim()) bad(f.id); });
+  CHECKS.forEach(c => { if(c.req && !model[c.id]) bad(c.id); });
+  if(anyNee(model) && !String(model.verklaring||"").trim()) bad("verklaring");
+  if(firstBad) firstBad.scrollIntoView({behavior:"smooth", block:"center"});
+  return !firstBad;
+}
+
+async function save(){
+  if(!validate()){ flash("Niet alle verplichte velden zijn ingevuld.", "err"); return; }
+  if(!db){ flash("Opslaan is hier niet beschikbaar — gebruik Print om het formulier vast te leggen.", "err", 6000); return; }
+  const btn = $("#btnSave"); if(btn){ btn.disabled = true; btn.textContent = "Opslaan…"; }
+  try{
+    if(!model.paraaf){ const sid = await uploadSignature(); if(sid) model.paraaf = sid; }
+    const fotos = {};
+    PHOTOS.forEach(p => { if(model.fotos[p.key]) fotos[p.key] = model.fotos[p.key]; });
+    const body = {fotos, paraaf: model.paraaf || null, status:"afgerond", updatedAt: Date.now()};
+    TEXTFIELDS.forEach(f => body[f.id] = String(model[f.id]||""));
+    CHECKS.forEach(c => body[c.id] = model[c.id] || "");
+    body.verklaring = String(model.verklaring||"");
+
+    if(editingId){
+      await db.doc(editingPath).update(body);
+      const openId = editingId, openPath = editingPath;
+      editingId = null; editingPath = null; model = blankModel(); sigDirty = false;
+      detail = Object.assign({__id: openId, __path: openPath}, body, {createdAt: (records.find(r=>r.__path===openPath)||{}).createdAt});
+      view = "detail"; render();
+      flash("Wijzigingen opgeslagen.", "ok");
+    }else{
+      body.createdAt = Date.now();
+      const ref = await formsCol(myUid).add(body);
+      try{ await db.doc("lassen/" + myUid).set({updatedAt: Date.now()}); }catch(e){} // index zodat de eigenaar deze map vindt
+      clearDraft();
+      editingId = null; model = blankModel(); sigDirty = false;
+      detail = Object.assign({__id: ref.id, __path: "lassen/"+myUid+"/forms/"+ref.id}, body);
+      view = "detail"; render();
+      flash("Formulier opgeslagen in het archief. Klik hieronder om de PDF te maken en te mailen.", "ok", 6000);
+    }
+  }catch(err){
+    flash("Opslaan mislukt" + (err && err.code ? ` (${err.code})` : "") + ". Probeer opnieuw.", "err", 6000);
+    if(btn){ btn.disabled = false; btn.textContent = "Formulier afronden"; }
+  }
+}
+
+/* ============================================================
+   Print
+   ============================================================ */
+/* ============================================================
+   CSV export
+   ============================================================ */
+async function exportCsv(){
+  if(!records.length){ flash("Er is nog niets om te exporteren.", "warn"); return; }
+  const cols = TEXTFIELDS.map(f => f.id).concat(CHECKS.map(c => c.id), ["verklaring","status"]);
+  const head = TEXTFIELDS.map(f => f.label).concat(CHECKS.map(c => c.n + ". " + c.q), ["Verklaring","Status"]);
+  const q = v => '"' + String(v==null?"":v).replace(/"/g,'""') + '"';
+  const csv = "\uFEFF" + [head.map(q).join(";")].concat(
+    records.map(r => cols.map(c => q(r[c])).join(";"))
+  ).join("\r\n");
+  if(!downloads){ flash("Downloaden is hier niet beschikbaar.", "err"); return; }
+  try{
+    await downloads.save({filename:`pe-lasborging-${new Date().toISOString().slice(0,10)}.csv`, data:csv});
+  }catch(e){
+    if(e && e.code === "declined") return;
+    flash("Export mislukt" + (e && e.code ? ` (${e.code})` : "") + ".", "err");
+  }
+}
+
+/* ============================================================
+   jsPDF laden — met terugval op een tweede bron
+   ============================================================ */
+const JSPDF_SOURCES = [
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js",
+  "https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"
+];
+let jsPdfLoadPromise = null;
+function ensureJsPdf(){
+  if(window.jspdf && window.jspdf.jsPDF) return Promise.resolve(true);
+  if(jsPdfLoadPromise) return jsPdfLoadPromise;
+  jsPdfLoadPromise = (async () => {
+    for(const src of JSPDF_SOURCES){
+      if(window.jspdf && window.jspdf.jsPDF) return true;
+      const ok = await new Promise(resolve => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.onload = () => resolve(!!(window.jspdf && window.jspdf.jsPDF));
+        s.onerror = () => resolve(false);
+        setTimeout(() => resolve(!!(window.jspdf && window.jspdf.jsPDF)), 8000);
+        document.head.appendChild(s);
+      });
+      if(ok) return true;
+    }
+    return !!(window.jspdf && window.jspdf.jsPDF);
+  })();
+  jsPdfLoadPromise.then(ok => { if(!ok) jsPdfLoadPromise = null; });
+  return jsPdfLoadPromise;
+}
+ensureJsPdf(); // alvast starten, niet wachten (bij falen kan een volgende klik het opnieuw proberen)
+
+/* ============================================================
+   PDF + mail naar beproevingen@mookbv.nl
+   ============================================================ */
+const MAIL_TO = "beproevingen@mookbv.nl";
+
+async function imgInfo(id){
+  const res = await fetch(blobUrl(id));
+  if(!res.ok) throw new Error("afbeelding niet gevonden");
+  const blob = await res.blob();
+  const data = await new Promise((ok,no) => {
+    const fr = new FileReader(); fr.onload = () => ok(fr.result); fr.onerror = no; fr.readAsDataURL(blob);
+  });
+  const dim = await new Promise(ok => {
+    const i = new Image(); i.onload = () => ok({w:i.naturalWidth, h:i.naturalHeight}); i.onerror = () => ok({w:4,h:3}); i.src = data;
+  });
+  return {data, w:dim.w, h:dim.h, png:/^data:image\/png/.test(data)};
+}
+
+function pdfName(r){
+  const p = String(r.projectnr || "zonder-nr").replace(/[^\w-]+/g,"-");
+  const d = (r.datum || new Date().toISOString().slice(0,10));
+  const l = r.lasnummer ? "_las" + String(r.lasnummer).replace(/[^\w-]+/g,"-") : "";
+  return `PE-lasborging_${p}_${d}${l}.pdf`;
+}
+
+async function makePdf(r){
+  const libReady = await ensureJsPdf();
+  if(!libReady) throw new Error("de PDF-bibliotheek kon niet geladen worden (netwerk geblokkeerd?)");
+  const doc = new window.jspdf.jsPDF({unit:"mm", format:"a4"});
+  const M = 15, PW = 210, PH = 297, CW = PW - 2*M, KW = 78, BOT = PH - 18;
+  let y = M;
+
+  const need = h => { if(y + h > BOT){ doc.addPage(); y = M; } };
+  const setN = (sz, bold) => { doc.setFont("helvetica", bold ? "bold" : "normal"); doc.setFontSize(sz); };
+
+  // kop
+  setN(13, true);
+  doc.text('Bijlage 4. "Liander PE Lasborgingsdocument"', M, y); y += 6;
+  setN(8.5, false); doc.setTextColor(70);
+  const meta = [`Projectnummer ${r.projectnr||"—"}`, nlDate(r.datum), `${r.adres||""} ${r.plaats||""}`.trim(), `Regio ${r.regio||"—"}`]
+    .filter(Boolean).join("   |   ");
+  doc.text(meta, M, y); y += 3.5;
+  doc.setTextColor(0); doc.setDrawColor(30); doc.setLineWidth(0.4);
+  doc.line(M, y, PW - M, y); y += 6;
+  doc.setLineWidth(0.15); doc.setDrawColor(140);
+
+  function row(k, v, sub){
+    setN(8.5, true);
+    const kl = doc.splitTextToSize(String(k), KW - 4);
+    let sl = [];
+    if(sub){ setN(7, false); sl = doc.splitTextToSize(String(sub), KW - 4); }
+    setN(9, false);
+    const vl = doc.splitTextToSize(String(v == null || v === "" ? "—" : v), CW - KW - 4);
+    const h = Math.max(kl.length * 3.7 + sl.length * 2.9, vl.length * 3.9) + 3.4;
+    need(h);
+    doc.setFillColor(243, 243, 241);
+    doc.rect(M, y, KW, h, "FD");
+    doc.rect(M + KW, y, CW - KW, h, "S");
+    setN(8.5, true); doc.text(kl, M + 2, y + 4);
+    if(sub){ setN(7, false); doc.setTextColor(110); doc.text(sl, M + 2, y + 4 + kl.length * 3.7); doc.setTextColor(0); }
+    setN(9, false); doc.text(vl, M + KW + 2, y + 4.2);
+    y += h;
+  }
+  function head(txt){
+    need(12); y += 4; setN(10, true);
+    doc.text(txt, M, y + 3); y += 5.4;
+    doc.setDrawColor(30); doc.setLineWidth(0.3); doc.line(M, y, PW - M, y);
+    doc.setDrawColor(140); doc.setLineWidth(0.15); y += 2.4;
+  }
+
+  head("Algemene gegevens");
+  TEXTFIELDS.forEach(f => row(`${f.n}. ${f.label}`, f.type === "date" ? nlDate(r[f.id]) : r[f.id]));
+
+  head("Controlepunten");
+  CHECKS.forEach(c => row(`${c.n}. ${c.q}`, r[c.id] === "ja" ? "JA" : r[c.id] === "nee" ? "NEE" : "—", c.hint || ""));
+
+  // foto's
+  const have = PHOTOS.filter(p => r.fotos && r.fotos[p.key]);
+  if(have.length){
+    head("Uitvoeringsfoto's");
+    const bw = (CW - 2 * 4) / 3, bh = 42;
+    need(bh + 12);
+    const top = y;
+    for(let i = 0; i < have.length; i++){
+      const p = have[i], x = M + i * (bw + 4);
+      try{
+        const im = await imgInfo(r.fotos[p.key]);
+        const s = Math.min(bw / im.w, bh / im.h);
+        const w = im.w * s, h = im.h * s;
+        doc.addImage(im.data, im.png ? "PNG" : "JPEG", x + (bw - w) / 2, top + (bh - h) / 2, w, h);
+      }catch(e){}
+      doc.rect(x, top, bw, bh, "S");
+      setN(7, true); doc.text(p.label, x, top + bh + 3.5);
+      setN(6.5, false); doc.setTextColor(110);
+      doc.text(doc.splitTextToSize(p.desc, bw), x, top + bh + 6.6);
+      doc.setTextColor(0);
+    }
+    y = top + bh + 14;
+  }
+
+  head("19. Verklaring");
+  setN(9, false);
+  const vl = doc.splitTextToSize(r.verklaring || "—", CW - 4);
+  const vh = Math.max(20, vl.length * 4 + 5);
+  need(vh); doc.rect(M, y, CW, vh, "S"); doc.text(vl, M + 2, y + 5); y += vh + 8;
+
+  // paraaf
+  need(34);
+  if(r.paraaf){
+    try{
+      const im = await imgInfo(r.paraaf);
+      const w = 48, h = Math.min(20, im.h * (w / im.w));
+      doc.addImage(im.data, "PNG", M, y, w, h); y += h;
+    }catch(e){ y += 18; }
+  }else{ y += 18; }
+  doc.setDrawColor(30); doc.line(M, y + 1, M + 60, y + 1); doc.setDrawColor(140);
+  setN(8.5, false);
+  doc.text(`Paraaf LTH — ${r.lth || ""}`, M, y + 5.5); y += 12;
+
+  need(16); setN(7.5, false); doc.setTextColor(90);
+  doc.text(doc.splitTextToSize(FOOTER_TXT, CW), M, y + 3);
+  doc.setTextColor(0);
+
+  const n = doc.getNumberOfPages();
+  for(let i = 1; i <= n; i++){
+    doc.setPage(i); setN(7, false); doc.setTextColor(130);
+    doc.text(`${r.projectnr || ""}  ${nlDate(r.datum)}`, M, PH - 8);
+    doc.text(`${i} / ${n}`, PW - M, PH - 8, {align:"right"});
+    doc.setTextColor(0);
+  }
+  return doc;
+}
+
+function mailtoUrl(r){
+  const sub = `PE Lasborgingsdocument — project ${r.projectnr||"?"}${r.lasnummer?` — lasnr. ${r.lasnummer}`:""} — ${nlDate(r.datum)}`;
+  const body = [
+    "Beste beproevingen,",
+    "",
+    "Bijgaand het PE lasborgingsdocument (Bijlage 4).",
+    "",
+    `Projectnummer : ${r.projectnr||"—"}`,
+    `Datum         : ${nlDate(r.datum)}`,
+    `Adres         : ${[r.adres, r.plaats].filter(Boolean).join(", ")||"—"}`,
+    `Regio         : ${r.regio||"—"}`,
+    `PE lasser     : ${r.lasser||"—"}`,
+    `LTH           : ${r.lth||"—"}`,
+    `Lasnummer     : ${r.lasnummer||"—"}`,
+    `Buisleverancier: ${r.buislev||"—"}`,
+    `Hulpstukleverancier: ${r.hulpstuk||"—"}`,
+    "",
+    anyNee(r) ? `Let op: één of meer controlepunten zijn met NEE beantwoord. Verklaring:\n${r.verklaring||""}` : "Alle controlepunten zijn akkoord.",
+    "",
+    "Met vriendelijke groet,"
+  ].join("\n");
+  const cc = r.lthmail ? `&cc=${encodeURIComponent(r.lthmail)}` : "";
+  return `mailto:${MAIL_TO}?subject=${encodeURIComponent(sub)}${cc}&body=${encodeURIComponent(body)}`;
+}
+
+async function pdfAndMail(r, alsoMail){
+  if(!r){ flash("Er is niets om te verwerken.", "err"); return; }
+  flash("PDF wordt opgebouwd…", "warn", 30000);
+  let doc;
+  try{ doc = await makePdf(r); }
+  catch(e){
+    setStatus("PDF opbouwen is mislukt (" + (e && e.message ? e.message : "onbekende fout") + "). Gebruik de knop Print om als PDF op te slaan.", "err");
+    return;
+  }
+  const name = pdfName(r);
+  if(!downloads){
+    setStatus("PDF opslaan is in deze weergave niet beschikbaar. Gebruik de knop Print om als PDF op te slaan.", "err");
+    return;
+  }
+  try{
+    await downloads.save({filename:name, data:doc.output("arraybuffer")});
+  }catch(e){
+    if(e && e.code === "declined"){ setStatus(""); return; }
+    const code = e && e.code ? e.code : "onbekend";
+    setStatus(`PDF opslaan is mislukt (${code}). Gebruik de knop Print om als PDF op te slaan.`, "err");
+    return;
+  }
+  setStatus("");
+  if(!alsoMail){ flash("PDF opgeslagen.", "ok"); return; }
+  $("#mFile").textContent = name;
+  $("#mOpen").setAttribute("href", mailtoUrl(r));
+  $("#mailModal").hidden = false;
+}
+
+/* ============================================================
+   Events
+   ============================================================ */
+document.addEventListener("input", e => {
+  const t = e.target;
+  const f = t.getAttribute && t.getAttribute("data-f");
+  if(!f) return;
+  if(t.hasAttribute("data-sel")){
+    if(t.value === "__other"){
+      model[f] = "";
+      const oth = document.querySelector(`[data-f="${f}"][data-other]`);
+      if(oth){ oth.style.display = "block"; oth.focus(); }
+    }else{
+      model[f] = t.value;
+      const oth = document.querySelector(`[data-f="${f}"][data-other]`);
+      if(oth){ oth.style.display = "none"; oth.value = ""; }
+    }
+  }else{
+    model[f] = t.value;
+  }
+  const fld = t.closest(".field"); if(fld) fld.classList.remove("invalid");
+  saveDraft();
+});
+
+document.addEventListener("click", e => {
+  if(e.target.id === "status" || e.target.closest("#status")){ setStatus(""); }
+});
+
+document.addEventListener("click", async e => {
+  const t = e.target.closest("[data-jn],[data-pick],[data-rmphoto],[data-open],button,a[id]");
+  if(!t) return;
+
+  // Ja/Nee
+  const jn = t.getAttribute("data-jn");
+  if(jn){
+    model[jn] = model[jn] === t.getAttribute("data-val") ? "" : t.getAttribute("data-val");
+    saveDraft(); renderForm(); return;
+  }
+  // foto kiezen / wissen
+  const pick = t.getAttribute("data-pick");
+  if(pick){ pendingPhotoKey = pick; $("#filepick").click(); return; }
+  const rm = t.getAttribute("data-rmphoto");
+  if(rm){ delete model.fotos[rm]; saveDraft(); renderForm(); return; }
+  // record openen
+  const open = t.getAttribute("data-open");
+  if(open){ detail = records.find(r => r.__path === open) || null; view = "detail"; render(); return; }
+
+  switch(t.id){
+    case "tabForm": view = "form"; render(); break;
+    case "tabList": view = "list"; render(); break;
+    case "btnNew":  editingId = null; model = blankModel(); sigDirty = false; view = "form"; render(); break;
+    case "btnSave": await save(); break;
+    case "btnMailDirect": if(validate()) await pdfAndMail(model, true); else flash("Vul eerst de verplichte velden in.", "err"); break;
+    case "btnPdfOnly": if(validate()) await pdfAndMail(model, false); else flash("Vul eerst de verplichte velden in.", "err"); break;
+    case "btnMailRec": await pdfAndMail(detail, true); break;
+    case "btnPdfRecOnly": await pdfAndMail(detail, false); break;
+    case "mClose": $("#mailModal").hidden = true; break;
+    case "mOpen": setTimeout(() => { $("#mailModal").hidden = true; }, 600); break;
+    case "mCopy":
+      try{ await navigator.clipboard.writeText(MAIL_TO); t.textContent = "Gekopieerd"; }
+      catch(err){ t.textContent = MAIL_TO; }
+      break;
+    case "btnBack": view = "list"; render(); break;
+    case "btnCsv": await exportCsv(); break;
+    case "btnEdit": {
+      editingId = detail.__id; editingPath = detail.__path;
+      model = Object.assign(blankModel(), detail, {fotos: Object.assign({}, detail.fotos||{})});
+      sigDirty = false; view = "form"; render();
+      break;
+    }
+    case "btnDel": {
+      if(!confirm("Dit formulier definitief verwijderen?")) return;
+      try{ await db.doc(detail.__path).delete(); view = "list"; detail = null; render(); flash("Verwijderd.", "ok"); }
+      catch(err){ flash("Verwijderen mislukt.", "err"); }
+      break;
+    }
+    case "btnReset": {
+      if(editingId){ editingId = null; editingPath = null; model = blankModel(); sigDirty = false; view = "list"; render(); return; }
+      if(!confirm("Formulier leegmaken?")) return;
+      model = blankModel(); sigDirty = false; clearDraft(); render();
+      break;
+    }
+    case "sigClear": {
+      if(model.paraaf){ model.paraaf = null; }
+      sigDirty = false; saveDraft(); renderForm();
+      break;
+    }
+  }
+});
+
+/* ============================================================
+   Start
+   ============================================================ */
+loadDraft();
+render();
+</script>
+</body>
+</html>
